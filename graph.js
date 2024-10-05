@@ -83,8 +83,28 @@ class Graph {
     return result;
   }
 
-  // Further study: shor
+  // Further study: shortest path
+  shortestPath(start, target) {
+    let queue = [[start]];
+    let visited = new Set();
+    visited.add(start);
   
+    while (queue.length) {
+      let path = queue.shift();
+      let node = path[path.length - 1];
+  
+      if (node === target) return path.map(v => v.value);
+  
+      for (let neighbor of node.adjacent) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push([...path, neighbor]);
+        }
+      }
+    }
+  
+    return null;  
+  }
 }
 
 module.exports = {Graph, Node}
